@@ -44,7 +44,7 @@ export function UpcomingClasses() {
         if (!token) throw new Error('No token found');
         console.log("Token being sent:", token);
 
-        const res = await axios.get("http://localhost:5000/api/users/enrolled-classes", {
+        const res = await axios.get("https://cb-back-s7yj.onrender.com/api/users/enrolled-classes", {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',

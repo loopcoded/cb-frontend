@@ -53,7 +53,7 @@ export function ScheduleView() {
         console.log("Making request with token:", token.substring(0, 20) + "...")
 
         // Make the API call with proper headers
-        const response = await fetch("http://localhost:5000/api/schedules", {
+        const response = await fetch("https://cb-back-s7yj.onrender.com/api/schedules", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

@@ -1,7 +1,7 @@
 // services/api.ts
 import axios from "axios"
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://cb-back-s7yj.onrender.com"
 
 // Create axios instance with default config
 const apiClient = axios.create({
@@ -169,7 +169,7 @@ export interface Section {
 // Auth functions
 export const registerUser = async (userData: RegisterData): Promise<AuthResponse> => {
   try {
-    const response = await apiClient.post('http://localhost:5000/api/auth/register', userData)
+    const response = await apiClient.post('https://cb-back-s7yj.onrender.com/api/auth/register', userData)
     return response.data
   } catch (error: any) {
     throw new Error(error.response?.data?.message || 'Registration failed')
@@ -181,7 +181,7 @@ export const loginUser = async (credentials: {
   password: string
 }): Promise<AuthResponse> => {
   try {
-    const response = await apiClient.post('http://localhost:5000/api/auth/login', credentials)
+    const response = await apiClient.post('https://cb-back-s7yj.onrender.com/api/auth/login', credentials)
     return response.data
   } catch (error: any) {
     throw new Error(error.response?.data?.message || 'Login failed')
@@ -193,7 +193,7 @@ export const api = {
   // Announcements
   getAllAnnouncements: async (): Promise<Announcement[]> => {
     try {
-      const response = await apiClient.get("http://localhost:5000/api/announcements/")
+      const response = await apiClient.get("https://cb-back-s7yj.onrender.com/api/announcements/")
       return response.data
     } catch (error) {
       console.error("Error fetching announcements:", error)
@@ -203,7 +203,7 @@ export const api = {
 
   getAnnouncementById: async (id: string): Promise<Announcement | null> => {
     try {
-      const response = await apiClient.get(`/api/announcements/${id}`)
+      const response = await apiClient.get(`https://cb-back-s7yj.onrender.com/api/announcements/${id}`)
       return response.data
     } catch (error) {
       console.error('Error fetching announcement:', error)

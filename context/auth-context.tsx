@@ -176,7 +176,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const token = localStorage.getItem('classbuddy_token')
       if (!token) throw new Error('No token found')
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/users/stats`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://cb-back-s7yj.onrender.com'}/api/users/stats`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -199,7 +199,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const token = localStorage.getItem('classbuddy_token')
       if (!token) throw new Error('No token found')
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/users/enrolled-classes`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://cb-back-s7yj.onrender.com'}/api/users/enrolled-classes`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -222,7 +222,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const token = localStorage.getItem('classbuddy_token')
       if (!token) throw new Error('No token found')
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/users/assignments/upcoming`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://cb-back-s7yj.onrender.com'}/api/users/assignments/upcoming`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
