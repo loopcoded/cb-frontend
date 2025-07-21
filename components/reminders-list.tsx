@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
@@ -10,28 +9,12 @@ import { api, type Reminder } from "@/services/api"
 import { toast } from "@/components/ui/use-toast"
 import { format } from "date-fns"
 
-export function RemindersList() {
-  const [reminders, setReminders] = useState<Reminder[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+interface RemindersListProps {
+  reminders: Reminder[]
+  onUpdate: () => void
+}
 
-  const fetchReminders = async () => {
-    try {
-      setLoading(true)
-      setError(null)
-      const data = await api.getAllReminders()
-      setReminders(data)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch reminders")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    fetchReminders()
-  }, [])
-
+export function RemindersList({ reminders, onUpdate }: RemindersListProps) {
   const toggleReminder = async (id: string) => {
     const reminder = reminders.find(r => r._id === id)
     if (!reminder) return
@@ -41,9 +24,8 @@ export function RemindersList() {
         completed: !reminder.completed
       })
       
-      setReminders(reminders.map(r => 
-        r._id === id ? { ...r, completed: updatedReminder.completed } : r
-      ))
+      // Notify parent to refresh data
+      onUpdate()
       
       toast({
         title: "Success",
@@ -62,7 +44,8 @@ export function RemindersList() {
     try {
       const success = await api.deleteReminder(id)
       if (success) {
-        setReminders(reminders.filter(r => r._id !== id))
+        // Notify parent to refresh data
+        onUpdate()
         toast({
           title: "Success",
           description: "Reminder deleted successfully"
@@ -105,27 +88,10 @@ export function RemindersList() {
     return `${displayHour}:${minutes} ${ampm}`
   }
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-8">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="text-center py-8">
-        <p className="text-red-500 mb-4">{error}</p>
-        <Button onClick={fetchReminders}>Try Again</Button>
-      </div>
-    )
-  }
-
   if (reminders.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="text-muted-foreground">No reminders found</p>
+        <p className="text-muted-foreground">No active reminders</p>
       </div>
     )
   }
